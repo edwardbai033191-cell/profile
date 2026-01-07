@@ -1,5 +1,1037 @@
-<!DOCTYPE html>
-<html>
-<head></head>
-<body>Profile site test</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edward Bai — Full-Stack Engineer</title>
+
+    <!-- Tailwind (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- AOS animations -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --card: rgba(255, 255, 255, 0.08);
+        --card2: rgba(255, 255, 255, 0.12);
+        --stroke: rgba(255, 255, 255, 0.14);
+        --stroke2: rgba(255, 255, 255, 0.18);
+        --glow: rgba(56, 189, 248, 0.22);
+        --glow2: rgba(168, 85, 247, 0.22);
+      }
+      html,
+      body {
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      /* Background */
+      .hero-bg {
+        background:
+          radial-gradient(900px 600px at 10% 10%, rgba(56, 189, 248, 0.16), transparent 55%),
+          radial-gradient(800px 500px at 90% 20%, rgba(168, 85, 247, 0.14), transparent 52%),
+          radial-gradient(600px 400px at 60% 95%, rgba(34, 197, 94, 0.12), transparent 52%),
+          linear-gradient(to bottom, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.90)),
+          url("https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=2400&q=80");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+      }
+      .glass {
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        box-shadow: 0 20px 70px rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      .glass-strong {
+        background: var(--card2);
+        border: 1px solid var(--stroke2);
+        box-shadow: 0 20px 90px rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+
+      /* Avatar glow ring */
+      .avatar-ring {
+        position: relative;
+        isolation: isolate;
+      }
+      .avatar-ring::before {
+        content: "";
+        position: absolute;
+        inset: -10px;
+        border-radius: 9999px;
+        background: conic-gradient(from 200deg, rgba(56, 189, 248, 0.9), rgba(168, 85, 247, 0.9), rgba(34, 197, 94, 0.9), rgba(56, 189, 248, 0.9));
+        filter: blur(12px);
+        opacity: 0.35;
+        z-index: -1;
+        animation: spin 10s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Hover lift */
+      .lift {
+        transform: translateY(0);
+        transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+      }
+      .lift:hover {
+        transform: translateY(-4px);
+        border-color: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 24px 90px rgba(0, 0, 0, 0.60);
+      }
+
+      /* Section title underline */
+      .section-title {
+        position: relative;
+        display: inline-block;
+      }
+      .section-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        height: 3px;
+        width: 74%;
+        border-radius: 9999px;
+        background: linear-gradient(90deg, rgba(56, 189, 248, 0.9), rgba(168, 85, 247, 0.9));
+        opacity: 0.9;
+      }
+
+      /* Skill “budget tag” chips */
+      .budget-chip {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 9999px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.06);
+        font-size: 0.78rem;
+        line-height: 1rem;
+        transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+        user-select: none;
+    }
+
+    .budget-chip:hover {
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .budget-chip .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 9999px;
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.9), rgba(168, 85, 247, 0.9));
+        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.12);
+        }
+
+        .budget-chip small {
+        opacity: 0.7;
+        font-weight: 600;
+        font-size: 0.65rem;
+        letter-spacing: 0.01em;
+        }
+
+
+      /* Timeline */
+      .timeline {
+        position: relative;
+      }
+      .timeline::before {
+        /* content: ""; */
+        position: absolute;
+        left: 20px;
+        top: 6px;
+        bottom: 6px;
+        width: 2px;
+        background: linear-gradient(to bottom, rgba(56, 189, 248, 0.65), rgba(168, 85, 247, 0.65));
+        opacity: 0.8;
+      }
+      .node {
+        position: relative;
+        padding-left: 56px;
+      }
+      .node::before {
+        /* content: ""; */
+        position: absolute;
+        left: 12px;
+        top: 28px;
+        width: 18px;
+        height: 18px;
+        border-radius: 9999px;
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.95), rgba(168, 85, 247, 0.95));
+        box-shadow: 0 0 0 6px rgba(56, 189, 248, 0.10);
+      }
+
+      /* Company logo box */
+      .logo-box {
+        width: 74px;
+        height: 74px;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.10);
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+      .logo-box img {
+        /* width: 56px;
+        height: 56px; */
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45));
+      }
+
+      /* Skill spans (per-experience ending) */
+      .skill-span {
+        display: inline-block;
+        padding: 8px 10px;
+        border-radius: 9999px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.07);
+        margin: 6px 8px 0 0;
+        font-size: 0.85rem;
+        line-height: 1rem;
+        opacity: 0.92;
+        transition: transform 180ms ease, border-color 180ms ease;
+      }
+      .skill-span:hover {
+        transform: translateY(-2px);
+        border-color: rgba(255, 255, 255, 0.28);
+      }
+
+      /* Subtle floating dots */
+      .floaty {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .floaty span {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.18);
+        filter: blur(0.2px);
+        animation: drift 10s linear infinite;
+        opacity: 0.35;
+      }
+      @keyframes drift {
+        0% { transform: translateY(20px) translateX(0); }
+        100% { transform: translateY(-1100px) translateX(40px); }
+      }
+
+      /* Reduce motion */
+      @media (prefers-reduced-motion: reduce) {
+        .avatar-ring::before,
+        .floaty span {
+          animation: none !important;
+        }
+        .lift,
+        .budget-chip,
+        .skill-span {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="hero-bg text-white">
+    <!-- Decorative floaty dots -->
+    <div class="floaty" aria-hidden="true">
+      <span style="left: 10%; top: 105%; animation-duration: 14s; width: 8px; height: 8px;"></span>
+      <span style="left: 22%; top: 120%; animation-duration: 12s; width: 10px; height: 10px;"></span>
+      <span style="left: 48%; top: 112%; animation-duration: 16s; width: 7px; height: 7px;"></span>
+      <span style="left: 62%; top: 130%; animation-duration: 15s; width: 9px; height: 9px;"></span>
+      <span style="left: 78%; top: 108%; animation-duration: 13s; width: 8px; height: 8px;"></span>
+      <span style="left: 90%; top: 122%; animation-duration: 17s; width: 11px; height: 11px;"></span>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 border-b border-white/10 bg-black/35 backdrop-blur-xl">
+      <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+        <a href="#top" class="flex items-center gap-3 group">
+          <div class="h-9 w-9 rounded-xl bg-white/10 border border-white/15 grid place-items-center group-hover:bg-white/14 transition">
+            <i class="fa-solid fa-code text-white/90"></i>
+          </div>
+          <div class="leading-tight">
+            <div class="font-semibold tracking-tight">Edward Bai</div>
+            <div class="text-xs text-white/70">Full-Stack Engineer</div>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 text-sm text-white/80">
+          <a class="hover:text-white transition" href="#about">About</a>
+          <a class="hover:text-white transition" href="#skills">Skills</a>
+          <a class="hover:text-white transition" href="#experience">Experience</a>
+          <a class="hover:text-white transition" href="#strengths">Strengths</a>
+          <a class="hover:text-white transition" href="#contact">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <a
+            href="https://www.linkedin.com/in/edward-b-15a5043a0/"
+            target="_blank"
+            rel="noreferrer"
+            class="px-3 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition text-sm"
+            title="LinkedIn"
+          >
+            <i class="fa-brands fa-linkedin mr-2"></i>LinkedIn
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main id="top" class="mx-auto max-w-6xl px-4">
+      <!-- HERO -->
+      <section class="pt-14 pb-10">
+        <div class="glass-strong rounded-3xl p-6 md:p-10 relative overflow-hidden">
+          <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+            <div class="absolute -top-32 -right-32 h-72 w-72 rounded-full" style="background: radial-gradient(circle at 30% 30%, var(--glow), transparent 60%);"></div>
+            <div class="absolute -bottom-36 -left-28 h-80 w-80 rounded-full" style="background: radial-gradient(circle at 30% 30%, var(--glow2), transparent 60%);"></div>
+          </div>
+
+          <div class="relative grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 items-start">
+            <!-- Avatar / Identity -->
+            <div class="flex md:block items-center gap-5">
+              <div class="avatar-ring">
+                <img
+                  class="h-24 w-24 md:h-28 md:w-28 rounded-full border border-white/20 object-cover"
+                  src="https://api.dicebear.com/9.x/identicon/svg?seed=Edward%20Bai&backgroundColor=0b1220"
+                  alt="Edward Bai avatar"
+                />
+              </div>
+              <div class="md:hidden">
+                <h1 class="text-2xl font-extrabold tracking-tight">Edward Bai</h1>
+                <p class="text-white/75 mt-1">Senior Full-Stack Engineer • Distributed Systems • Product UI</p>
+              </div>
+            </div>
+
+            <!-- Intro -->
+            <div>
+              <div class="hidden md:block">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">
+                  Edward Bai
+                  <span class="text-white/70 font-semibold">— Full-Stack Engineer</span>
+                </h1>
+                <p class="mt-3 text-white/75 text-lg">
+                  I build customer-facing products that feel effortless, and the systems behind them that stay calm under pressure.
+                </p>
+              </div>
+
+              <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div class="glass rounded-2xl p-4 lift" data-aos="fade-up">
+                  <div class="flex items-center justify-between">
+                    <div class="text-sm text-white/70">Location</div>
+                    <i class="fa-solid fa-location-dot text-white/70"></i>
+                  </div>
+                  <div class="mt-2 font-semibold">Torrance, CA</div>
+                  <div class="text-xs text-white/60 mt-1">Remote-friendly • PST / EST overlap</div>
+                </div>
+
+                <div class="glass rounded-2xl p-4 lift" data-aos="fade-up" data-aos-delay="70">
+                  <div class="flex items-center justify-between">
+                    <div class="text-sm text-white/70">Education</div>
+                    <i class="fa-solid fa-graduation-cap text-white/70"></i>
+                  </div>
+                  <div class="mt-2 font-semibold">Carnegie Mellon University</div>
+                  <div class="text-xs text-white/60 mt-1">B.S. Computer Science • GPA 3.8</div>
+                </div>
+
+                <div class="glass rounded-2xl p-4 lift" data-aos="fade-up" data-aos-delay="140">
+                  <div class="flex items-center justify-between">
+                    <div class="text-sm text-white/70">Contact</div>
+                    <i class="fa-solid fa-paper-plane text-white/70"></i>
+                  </div>
+                  <div class="mt-2 font-semibold">(323) 433-5181</div>
+                  <a class="text-xs text-sky-200 hover:text-sky-100 transition mt-1 inline-block" href="mailto:edwardbai033191@gmail.com">
+                    edwardbai033191@gmail.com
+                  </a>
+                </div>
+              </div>
+
+              <div class="mt-6 md:mt-7">
+                <p class="text-white/80 leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+                  I’m a full-stack engineer who likes the “whole-product” view: crisp UI, fast APIs, reliable data flows, and observability
+                  you can actually trust. I’ve worked across AI applications, real-time collaboration, and cloud-scale telemetry—shipping
+                  features end-to-end from design to production rollout. What I’m best at is turning messy requirements into clean
+                  architectures, then making the experience feel simple for the user. I’m comfortable going deep on performance and
+                  reliability, but I’m just as picky about interaction details, responsiveness, and polish. If the product needs a new capability,
+                  I can prototype quickly, harden it into a service, and keep it healthy with monitoring, dashboards, and a sane on-call story.
+                </p>
+
+                <div class="mt-5 flex flex-wrap gap-3" data-aos="fade-up" data-aos-delay="160">
+                  <a
+                    class="px-4 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition inline-flex items-center gap-2"
+                    href="https://www.linkedin.com/in/edward-b-15a5043a0/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <i class="fa-brands fa-linkedin"></i><span class="font-semibold">LinkedIn</span>
+                  </a>
+                  <a
+                    class="px-4 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition inline-flex items-center gap-2"
+                    href="#experience"
+                  >
+                    <i class="fa-solid fa-briefcase"></i><span class="font-semibold">View Experience</span>
+                  </a>
+                  <a
+                    class="px-4 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition inline-flex items-center gap-2"
+                    href="#skills"
+                  >
+                    <i class="fa-solid fa-layer-group"></i><span class="font-semibold">Tech Stack</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="py-10">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+          <div class="lg:col-span-2 glass rounded-3xl p-7 lift" data-aos="fade-up">
+            <h2 class="text-2xl md:text-3xl font-extrabold section-title">About</h2>
+            <p class="mt-6 text-white/80 leading-relaxed">
+              I like building software that users immediately “get,” even when the system underneath is doing hard things:
+              secure sandbox execution, low-latency sync, multi-provider routing, or large-scale data ingestion. My default approach
+              is to start from the user journey, then shape the architecture so it scales naturally—clean boundaries, reliable contracts,
+              and observability that tells the truth. I’m happiest when I can move across the stack: prototype an interaction in
+              <span class="text-white font-semibold">React/TypeScript</span>, ship the backend in <span class="text-white font-semibold">Node/Go/Python/Java</span>,
+              and operationalize it with <span class="text-white font-semibold">AWS + Kubernetes + CI/CD</span>.
+              Over time, that mindset has helped me deliver systems that are both fast and durable—without drama.
+            </p>
+
+            <div class="mt-6 flex flex-wrap gap-3 text-sm">
+              <span class="px-3 py-2 rounded-xl bg-white/5 border border-white/15 inline-flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-white/70"></i>Security-minded by default
+              </span>
+              <span class="px-3 py-2 rounded-xl bg-white/5 border border-white/15 inline-flex items-center gap-2">
+                <i class="fa-solid fa-gauge-high text-white/70"></i>Performance + latency focus
+              </span>
+              <span class="px-3 py-2 rounded-xl bg-white/5 border border-white/15 inline-flex items-center gap-2">
+                <i class="fa-solid fa-sitemap text-white/70"></i>Distributed systems comfort zone
+              </span>
+              <span class="px-3 py-2 rounded-xl bg-white/5 border border-white/15 inline-flex items-center gap-2">
+                <i class="fa-solid fa-eye text-white/70"></i>Obs-first engineering habits
+              </span>
+            </div>
+          </div>
+
+          <div class="glass rounded-3xl p-7 lift" data-aos="fade-up" data-aos-delay="90">
+            <h3 class="text-lg font-bold">Quick Snapshot</h3>
+            <div class="mt-5 space-y-4 text-white/80">
+              <div class="flex items-start gap-3">
+                <i class="fa-solid fa-wand-magic-sparkles mt-1 text-white/70"></i>
+                <div>
+                  <div class="font-semibold text-white">Product polish</div>
+                  <div class="text-sm text-white/70">Interactions that feel smooth, predictable, and fast.</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <i class="fa-solid fa-network-wired mt-1 text-white/70"></i>
+                <div>
+                  <div class="font-semibold text-white">Systems thinking</div>
+                  <div class="text-sm text-white/70">APIs, data flows, reliability, cost, and scaling.</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <i class="fa-solid fa-magnifying-glass-chart mt-1 text-white/70"></i>
+                <div>
+                  <div class="font-semibold text-white">Observability</div>
+                  <div class="text-sm text-white/70">Tracing/metrics/logs that make incidents shorter.</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <i class="fa-solid fa-people-group mt-1 text-white/70"></i>
+                <div>
+                  <div class="font-semibold text-white">Team multiplier</div>
+                  <div class="text-sm text-white/70">Design reviews, mentoring, pragmatic alignment.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-white/10">
+              <a
+                class="w-full px-4 py-3 rounded-2xl bg-white/10 hover:bg-white/15 transition border border-white/15 inline-flex items-center justify-center gap-2 font-semibold"
+                href="#contact"
+              >
+                <i class="fa-solid fa-envelope"></i>Get in touch
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SKILLS -->
+      <section id="skills" class="py-8">
+        <div class="glass-strong rounded-3xl p-6 md:p-7 lift" data-aos="fade-up">
+          <h2 class="text-2xl md:text-3xl font-extrabold section-title">
+            Tech Skills
+          </h2>
+      
+          <p class="mt-4 text-white/70 max-w-3xl text-sm">
+            A compact view of the tools I actively use across frontend, backend, data,
+            cloud infrastructure, and observability.
+          </p>
+      
+          <!-- Skill Groups -->
+          <div class="mt-6 space-y-5">
+      
+            <!-- Frontend -->
+            <div>
+              <div class="flex items-center gap-2 mb-2 text-sm font-semibold text-white/85">
+                <i class="fa-solid fa-display text-white/60"></i>
+                Frontend
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="budget-chip"><span class="dot"></span>React</span>
+                <span class="budget-chip"><span class="dot"></span>Redux</span>
+                <span class="budget-chip"><span class="dot"></span>TypeScript</span>
+                <span class="budget-chip"><span class="dot"></span>Next.js</span>
+                <span class="budget-chip"><span class="dot"></span>Tailwind CSS</span>
+                <span class="budget-chip"><span class="dot"></span>HTML</span>
+                <span class="budget-chip"><span class="dot"></span>CSS</span>
+                <span class="budget-chip"><span class="dot"></span>Canvas APIs</span>
+              </div>
+            </div>
+      
+            <!-- Backend & Data -->
+            <div>
+              <div class="flex items-center gap-2 mb-2 text-sm font-semibold text-white/85">
+                <i class="fa-solid fa-server text-white/60"></i>
+                Backend & Data
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="budget-chip"><span class="dot"></span>Node.js</span>
+                <span class="budget-chip"><span class="dot"></span>Go</span>
+                <span class="budget-chip"><span class="dot"></span>Python</span>
+                <span class="budget-chip"><span class="dot"></span>Java</span>
+                <span class="budget-chip"><span class="dot"></span>C#</span>
+                <span class="budget-chip"><span class="dot"></span>PostgreSQL</span>
+                <span class="budget-chip"><span class="dot"></span>MongoDB</span>
+                <span class="budget-chip"><span class="dot"></span>DynamoDB</span>
+                <span class="budget-chip"><span class="dot"></span>Redis</span>
+                <span class="budget-chip"><span class="dot"></span>REST</span>
+                <span class="budget-chip"><span class="dot"></span>GraphQL</span>
+                <span class="budget-chip"><span class="dot"></span>WebSocket</span>
+                <span class="budget-chip"><span class="dot"></span>gRPC</span>
+                <span class="budget-chip"><span class="dot"></span>Kafka</span>
+                <span class="budget-chip"><span class="dot"></span>NATS</span>
+                <span class="budget-chip"><span class="dot"></span>Kinesis</span>
+              </div>
+            </div>
+      
+            <!-- Cloud / DevOps / Observability -->
+            <div>
+              <div class="flex items-center gap-2 mb-2 text-sm font-semibold text-white/85">
+                <i class="fa-solid fa-cloud text-white/60"></i>
+                Cloud, DevOps & Observability
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="budget-chip"><span class="dot"></span>AWS</span>
+                <span class="budget-chip"><span class="dot"></span>Lambda</span>
+                <span class="budget-chip"><span class="dot"></span>API Gateway</span>
+                <span class="budget-chip"><span class="dot"></span>SQS</span>
+                <span class="budget-chip"><span class="dot"></span>SNS</span>
+                <span class="budget-chip"><span class="dot"></span>Step Functions</span>
+                <span class="budget-chip"><span class="dot"></span>ECS</span>
+                <span class="budget-chip"><span class="dot"></span>EC2</span>
+                <span class="budget-chip"><span class="dot"></span>S3</span>
+                <span class="budget-chip"><span class="dot"></span>IAM</span>
+                <span class="budget-chip"><span class="dot"></span>VPC</span>
+                <span class="budget-chip"><span class="dot"></span>Docker</span>
+                <span class="budget-chip"><span class="dot"></span>Kubernetes</span>
+                <span class="budget-chip"><span class="dot"></span>Terraform</span>
+                <span class="budget-chip"><span class="dot"></span>CI/CD</span>
+                <span class="budget-chip"><span class="dot"></span>OpenTelemetry</span>
+                <span class="budget-chip"><span class="dot"></span>Prometheus</span>
+                <span class="budget-chip"><span class="dot"></span>Grafana</span>
+                <span class="budget-chip"><span class="dot"></span>CloudWatch</span>
+                <span class="budget-chip"><span class="dot"></span>OpenSearch</span>
+                <span class="budget-chip"><span class="dot"></span>Linux</span>
+                <span class="budget-chip"><span class="dot"></span>Git</span>
+              </div>
+            </div>
+      
+          </div>
+        </div>
+      </section>
+      
+
+      <!-- EXPERIENCE -->
+      <section id="experience" class="py-10">
+        <div class="flex items-end justify-between flex-wrap gap-4">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-extrabold section-title">Experience</h2>
+            <p class="mt-6 text-white/70 max-w-3xl">
+              A vertical timeline of the teams and systems I’ve shipped—customer-facing UI, platform APIs, real-time sync, and cloud-scale telemetry.
+            </p>
+          </div>
+
+          <div class="text-xs text-white/60 flex items-center gap-2">
+            <i class="fa-regular fa-circle-check"></i>
+            Cards include: narrative + specific functions + skills used.
+          </div>
+        </div>
+
+        <div class="timeline mt-8 space-y-6">
+          <!-- Quora / Poe -->
+          <article class="node glass-strong rounded-3xl p-6 md:p-8 lift" data-aos="fade-up">
+            <div class="flex items-start justify-between gap-4 flex-wrap">
+              <div class="flex items-start gap-4">
+                <div class="logo-box">
+                  <!-- Clearbit logo (real company logo) -->
+                  <img src="quora.png" alt="Quora logo" />
+                </div>
+                <div>
+                  <div class="text-sm text-white/65">Jan 2023 – Dec 2025 • Remote</div>
+                  <h3 class="text-xl md:text-2xl font-extrabold mt-1">
+                    Senior Full-Stack Engineer — <span class="text-white/80">Quora (Poe)</span>
+                  </h3>
+                  <div class="mt-2 inline-flex items-center gap-2 text-sm text-white/70">
+                    <i class="fa-solid fa-robot"></i>
+                    <span>AI app ecosystem • multi-provider orchestration • creator monetization</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-xs text-white/70">
+                  <i class="fa-solid fa-bolt mr-2"></i>Low-latency routing
+                </span>
+                <span class="px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-xs text-white/70">
+                  <i class="fa-solid fa-shield mr-2"></i>Sandboxed execution
+                </span>
+              </div>
+            </div>
+
+            <div class="mt-6 text-white/80 leading-relaxed">
+              <p>
+                At Poe, I helped evolve the product from a single chatbot into a scalable AI application platform where users can discover,
+                configure, and interact with many model providers in one place. I owned features across the stack: polished UI for interactive
+                experiences, backend APIs for routing and orchestration, and the supporting workflows that keep everything reliable under
+                heavy traffic. A big part of my work was taking ambiguous product ideas—like “interactive in-chat apps” or “creator payouts”—
+                and turning them into secure, maintainable systems with clear contracts. I spent a lot of time optimizing latency and failure
+                handling, because AI routing has a different reliability profile than typical CRUD workloads. I also invested in observability and
+                operational tooling so the team could debug incidents quickly and ship changes with confidence.
+              </p>
+            </div>
+
+            <ul class="mt-5 space-y-2 text-white/78">
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Built an interactive in-chat app preview system using <b>TypeScript</b> + <b>React</b>, executing HTML/JS safely in a sandboxed environment.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Designed a unified multi-provider routing API in <b>Node.js</b> and <b>Go</b> to orchestrate model requests across vendors and custom backends.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Implemented a high-throughput routing layer on <b>Kubernetes</b> with fault tolerance, backpressure strategies, and request timeouts.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Coordinated async rendering & execution workflows using <b>AWS Lambda</b>, <b>SQS</b>, <b>SNS</b>, and <b>API Gateway</b>.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Delivered creator monetization flows with <b>FastAPI</b>, <b>PostgreSQL</b>, and <b>Stripe Connect</b> (onboarding, usage tracking, payouts).</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Instrumented distributed services with <b>OpenTelemetry</b>; surfaced metrics in <b>Prometheus/Grafana</b> and logs in <b>CloudWatch/OpenSearch</b>.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Improved platform stability with caching and coordination via <b>Redis</b>, plus strict API contracts using <b>gRPC</b> and <b>Protocol Buffers</b>.</span></li>
+            </ul>
+
+            <div class="mt-6 pt-5 border-t border-white/10">
+              <div class="text-sm text-white/65 font-semibold mb-2">Skills used</div>
+              <div class="flex flex-wrap">
+                <span class="skill-span">TypeScript</span><span class="skill-span">React</span><span class="skill-span">Redux</span><span class="skill-span">Node.js</span>
+                <span class="skill-span">Go</span><span class="skill-span">FastAPI</span><span class="skill-span">Django</span><span class="skill-span">PostgreSQL</span>
+                <span class="skill-span">Redis</span><span class="skill-span">Stripe Connect</span><span class="skill-span">AWS Lambda</span><span class="skill-span">SQS</span>
+                <span class="skill-span">SNS</span><span class="skill-span">API Gateway</span><span class="skill-span">Kubernetes</span><span class="skill-span">Docker</span>
+                <span class="skill-span">Prometheus</span><span class="skill-span">Grafana</span><span class="skill-span">OpenTelemetry</span><span class="skill-span">CloudWatch</span>
+                <span class="skill-span">OpenSearch</span><span class="skill-span">gRPC</span><span class="skill-span">Protocol Buffers</span><span class="skill-span">Terraform</span>
+                <span class="skill-span">WebSocket</span><span class="skill-span">CI/CD</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Zoom -->
+          <article class="node glass-strong rounded-3xl p-6 md:p-8 lift" data-aos="fade-up">
+            <div class="flex items-start justify-between gap-4 flex-wrap">
+              <div class="flex items-start gap-4">
+                <div class="logo-box">
+                  <img src="zoom.png" alt="Zoom logo" />
+                </div>
+                <div>
+                  <div class="text-sm text-white/65">Apr 2018 – Dec 2022 • San Jose, CA</div>
+                  <h3 class="text-xl md:text-2xl font-extrabold mt-1">
+                    Full-Stack Software Engineer — <span class="text-white/80">Zoom Video Communications</span>
+                  </h3>
+                  <div class="mt-2 inline-flex items-center gap-2 text-sm text-white/70">
+                    <i class="fa-solid fa-pen-ruler"></i>
+                    <span>Real-time collaboration • low-latency sync • distributed event pipelines</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-xs text-white/70">
+                  <i class="fa-solid fa-users mr-2"></i>Multi-user sessions
+                </span>
+                <span class="px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-xs text-white/70">
+                  <i class="fa-solid fa-shuffle mr-2"></i>CRDT-style updates
+                </span>
+              </div>
+            </div>
+
+            <div class="mt-6 text-white/80 leading-relaxed">
+              <p>
+                At Zoom, I worked on Whiteboard—building the kind of real-time collaboration experience where latency and consistency
+                directly impact user trust. I helped design the system so many users could draw, edit, and navigate simultaneously while
+                keeping boards synchronized across regions. My work balanced frontend responsiveness with distributed backend coordination,
+                because the UI has to feel instant even when the network is not. I built out event pipelines and synchronization logic that
+                could handle high fan-out, retries, and partial failures. I also collaborated closely with product and design to make tools
+                intuitive—snapping, layering, selection behavior, and “it just works” interactions that reduce friction in meetings.
+              </p>
+            </div>
+
+            <ul class="mt-5 space-y-2 text-white/78">
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Implemented responsive drawing tools and layered interactions using <b>React</b>, <b>TypeScript</b>, and <b>Canvas APIs</b>.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Built real-time session sync over <b>WebSocket</b> via <b>AWS API Gateway</b>, handling reconnects and ordering concerns.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Designed distributed state pipelines using <b>Kafka</b> + <b>NATS</b> and backend workers in <b>Java</b> and <b>Python</b>.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Used <b>Redis</b> as a low-latency coordination and session store for high-concurrency collaboration workloads.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Persisted board snapshots and assets in <b>S3</b>, with metadata/indexing in <b>DynamoDB</b> for durability and cost efficiency.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Orchestrated background maintenance jobs using <b>AWS Step Functions</b> and <b>Docker</b> tasks with retries and observability.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Monitored real-time health using <b>Prometheus</b> dashboards and service-level signals to catch regressions early.</span></li>
+            </ul>
+
+            <div class="mt-6 pt-5 border-t border-white/10">
+              <div class="text-sm text-white/65 font-semibold mb-2">Skills used</div>
+              <div class="flex flex-wrap">
+                <span class="skill-span">React</span><span class="skill-span">TypeScript</span><span class="skill-span">Canvas APIs</span><span class="skill-span">Node.js</span>
+                <span class="skill-span">Python</span><span class="skill-span">Java</span><span class="skill-span">WebSocket</span><span class="skill-span">gRPC</span>
+                <span class="skill-span">Redis</span><span class="skill-span">Kafka</span><span class="skill-span">NATS</span><span class="skill-span">etcd</span>
+                <span class="skill-span">Consul</span><span class="skill-span">AWS API Gateway</span><span class="skill-span">ECS</span><span class="skill-span">S3</span>
+                <span class="skill-span">DynamoDB</span><span class="skill-span">Step Functions</span><span class="skill-span">Docker</span><span class="skill-span">Prometheus</span>
+                <span class="skill-span">CI/CD</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- AWS -->
+          <article class="node glass-strong rounded-3xl p-6 md:p-8 lift" data-aos="fade-up">
+            <div class="flex items-start justify-between gap-4 flex-wrap">
+              <div class="flex items-start gap-4">
+                <div class="logo-box">
+                  <img src="aws.png" alt="AWS logo" />
+                </div>
+                <div>
+                  <div class="text-sm text-white/65">Jan 2014 – Mar 2018 • Seattle, WA</div>
+                  <h3 class="text-xl md:text-2xl font-extrabold mt-1">
+                    Software Development Engineer — <span class="text-white/80">Amazon Web Services (CloudWatch)</span>
+                  </h3>
+                  <div class="mt-2 inline-flex items-center gap-2 text-sm text-white/70">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Cloud observability • telemetry pipelines • multi-region reliability</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-xs text-white/70">
+                  <i class="fa-solid fa-database mr-2"></i>Ingestion pipelines
+                </span>
+                <span class="px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-xs text-white/70">
+                  <i class="fa-solid fa-earth-americas mr-2"></i>Multi-region
+                </span>
+              </div>
+            </div>
+
+            <div class="mt-6 text-white/80 leading-relaxed">
+              <p>
+                At AWS, I worked on CloudWatch’s observability platform—systems that ingest and process metrics and logs from massive
+                fleets of customer workloads. I contributed to telemetry pipelines that prioritize high throughput, low latency, and reliability
+                across regions, where every design decision must consider failure modes and operational safety. I built components that
+                improved ingestion performance and durability, often balancing cost controls with scaling behavior. I also worked on alarm
+                evaluation logic so customers could detect issues faster and trust their alerts. Across projects, I focused on measurable outcomes:
+                throughput, p99 latency, incident rate, and operational ergonomics for service owners.
+              </p>
+            </div>
+
+            <ul class="mt-5 space-y-2 text-white/78">
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Built high-throughput ingestion systems in <b>Java</b>/<b>Scala</b> using <b>Kinesis</b>, <b>DynamoDB</b>, and <b>S3</b> to improve durability.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Designed log-processing pipelines with <b>Kinesis Streams</b>, <b>EC2</b> autoscaling, and compression workflows for CloudWatch Logs.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Implemented alarm evaluation improvements in <b>Java</b>, reducing detection latency and enabling richer multi-metric logic.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Extended agents/SDKs in <b>C#</b>, <b>Java</b>, and <b>Python</b> to improve custom metric publishing reliability.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Strengthened multi-region resilience with replication and failover flows using <b>SNS</b>, <b>SQS</b>, and IAM-secured APIs.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Operationalized services with dashboards and on-call tooling using <b>CloudWatch</b> signals and disciplined incident practices.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Shipped changes safely via <b>Git</b>-based workflows, careful rollouts, and continuous service health verification.</span></li>
+            </ul>
+
+            <div class="mt-6 pt-5 border-t border-white/10">
+              <div class="text-sm text-white/65 font-semibold mb-2">Skills used</div>
+              <div class="flex flex-wrap">
+                <span class="skill-span">Java</span><span class="skill-span">Scala</span><span class="skill-span">Python</span><span class="skill-span">C#</span>
+                <span class="skill-span">Kinesis</span><span class="skill-span">DynamoDB</span><span class="skill-span">S3</span><span class="skill-span">EC2</span>
+                <span class="skill-span">CloudWatch</span><span class="skill-span">SNS</span><span class="skill-span">SQS</span><span class="skill-span">IAM</span>
+                <span class="skill-span">ELB</span><span class="skill-span">VPC</span><span class="skill-span">Docker</span><span class="skill-span">Git</span>
+                <span class="skill-span">Distributed Systems</span><span class="skill-span">Observability</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- AWS Intern -->
+          <article class="node glass-strong rounded-3xl p-6 md:p-8 lift" data-aos="fade-up">
+            <div class="flex items-start justify-between gap-4 flex-wrap">
+              <div class="flex items-start gap-4">
+                <div class="logo-box">
+                  <img src="aws.png" alt="Amazon logo" />
+                </div>
+                <div>
+                  <div class="text-sm text-white/65">May 2012 – Aug 2012 • Seattle, WA</div>
+                  <h3 class="text-xl md:text-2xl font-extrabold mt-1">
+                    Software Engineering Intern — <span class="text-white/80">Amazon Web Services (AWS)</span>
+                  </h3>
+                  <div class="mt-2 inline-flex items-center gap-2 text-sm text-white/70">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    <span>Internal tooling • automation • reliability</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-xs text-white/70">
+                  <i class="fa-solid fa-gear mr-2"></i>Automation
+                </span>
+              </div>
+            </div>
+
+            <div class="mt-6 text-white/80 leading-relaxed">
+              <p>
+                During my AWS internship, I worked on internal tooling that supported EC2 and S3 operational workflows.
+                I focused on practical engineering: adding backend features that made service teams faster and reduced repetitive toil.
+                I built automation scripts and small system improvements that helped streamline daily operations and improve reliability.
+                I learned how production services are maintained at scale—how to think in terms of safety, rollout strategy, and clear ownership.
+                I also got early exposure to working in an engineering org cadence with standups, code reviews, and design discussions,
+                which shaped how I collaborate today.
+              </p>
+            </div>
+
+            <ul class="mt-5 space-y-2 text-white/78">
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Implemented backend features for internal EC2/S3 tools using <b>Java</b> with an emphasis on correctness and maintainability.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Wrote automation scripts in <b>Perl</b> to reduce repetitive operational tasks and improve team efficiency.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Assisted with internal API maintenance, improving reliability via defensive coding patterns and validation checks.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Added small observability hooks and logging conventions to help service owners debug faster.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Participated in <b>Agile</b> ceremonies (standups/reviews) and learned review culture through iterative code feedback.</span></li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/60"></i><span>Documented changes clearly to support handoffs and reduce knowledge gaps across operators and developers.</span></li>
+            </ul>
+
+            <div class="mt-6 pt-5 border-t border-white/10">
+              <div class="text-sm text-white/65 font-semibold mb-2">Skills used</div>
+              <div class="flex flex-wrap">
+                <span class="skill-span">Java</span><span class="skill-span">Perl</span><span class="skill-span">Backend Programming</span>
+                <span class="skill-span">Internal APIs</span><span class="skill-span">Automation</span><span class="skill-span">Agile</span>
+                <span class="skill-span">Reliability</span><span class="skill-span">Git</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- STRENGTHS -->
+      <section id="strengths" class="py-10">
+        <div class="glass-strong rounded-3xl p-7 md:p-9 lift" data-aos="fade-up">
+          <h2 class="text-2xl md:text-3xl font-extrabold section-title">Strengths</h2>
+          <p class="mt-6 text-white/70 max-w-3xl">
+            How I tend to show up on teams—practical, product-aware, and calm under load.
+          </p>
+
+          <div class="mt-7 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+            <div class="glass rounded-2xl p-6 lift" data-aos="fade-up" data-aos-delay="60">
+              <div class="flex items-center gap-3">
+                <div class="h-11 w-11 rounded-2xl bg-white/10 border border-white/15 grid place-items-center">
+                  <i class="fa-solid fa-compass-drafting"></i>
+                </div>
+                <div class="font-bold text-lg">End-to-end ownership</div>
+              </div>
+              <p class="mt-3 text-white/75 leading-relaxed">
+                I can take a feature from vague idea to production: UX flow, API contracts, data design, rollout plan, and monitoring.
+                I like leaving behind clean interfaces and documentation so the team can build faster after I’m done.
+              </p>
+            </div>
+
+            <div class="glass rounded-2xl p-6 lift" data-aos="fade-up" data-aos-delay="110">
+              <div class="flex items-center gap-3">
+                <div class="h-11 w-11 rounded-2xl bg-white/10 border border-white/15 grid place-items-center">
+                  <i class="fa-solid fa-stopwatch"></i>
+                </div>
+                <div class="font-bold text-lg">Latency & reliability</div>
+              </div>
+              <p class="mt-3 text-white/75 leading-relaxed">
+                I’m comfortable tuning p95/p99 performance, designing backpressure, and building failure-friendly systems.
+                My goal is not just “fast,” but “predictably fast.”
+              </p>
+            </div>
+
+            <div class="glass rounded-2xl p-6 lift" data-aos="fade-up" data-aos-delay="160">
+              <div class="flex items-center gap-3">
+                <div class="h-11 w-11 rounded-2xl bg-white/10 border border-white/15 grid place-items-center">
+                  <i class="fa-solid fa-eye"></i>
+                </div>
+                <div class="font-bold text-lg">Observability-first</div>
+              </div>
+              <p class="mt-3 text-white/75 leading-relaxed">
+                I instrument early with traces/metrics/logs so debugging is data-driven.
+                I like dashboards that reflect real user experience and operational risk.
+              </p>
+            </div>
+
+            <div class="glass rounded-2xl p-6 lift" data-aos="fade-up" data-aos-delay="210">
+              <div class="flex items-center gap-3">
+                <div class="h-11 w-11 rounded-2xl bg-white/10 border border-white/15 grid place-items-center">
+                  <i class="fa-solid fa-diagram-project"></i>
+                </div>
+                <div class="font-bold text-lg">Architecture clarity</div>
+              </div>
+              <p class="mt-3 text-white/75 leading-relaxed">
+                I like systems that are easy to reason about: strong boundaries, explicit contracts, and pragmatic tradeoffs.
+                Clean architecture is how teams move quickly without breaking things.
+              </p>
+            </div>
+
+            <div class="glass rounded-2xl p-6 lift" data-aos="fade-up" data-aos-delay="260">
+              <div class="flex items-center gap-3">
+                <div class="h-11 w-11 rounded-2xl bg-white/10 border border-white/15 grid place-items-center">
+                  <i class="fa-solid fa-people-group"></i>
+                </div>
+                <div class="font-bold text-lg">Team multiplier</div>
+              </div>
+              <p class="mt-3 text-white/75 leading-relaxed">
+                I mentor via code reviews, design feedback, and pragmatic standards.
+                I care about shared conventions that keep teams aligned and shipping.
+              </p>
+            </div>
+
+            <div class="glass rounded-2xl p-6 lift" data-aos="fade-up" data-aos-delay="310">
+              <div class="flex items-center gap-3">
+                <div class="h-11 w-11 rounded-2xl bg-white/10 border border-white/15 grid place-items-center">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <div class="font-bold text-lg">Product feel</div>
+              </div>
+              <p class="mt-3 text-white/75 leading-relaxed">
+                I’m picky about the last 10%—micro-interactions, edge cases, and polish.
+                I like products that feel calm, responsive, and thoughtfully designed.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="py-10 pb-16">
+        <div class="glass-strong rounded-3xl p-7 md:p-9 lift" data-aos="fade-up">
+          <h2 class="text-2xl md:text-3xl font-extrabold section-title">Contact</h2>
+          <p class="mt-6 text-white/70 max-w-3xl">
+            Want to talk about a role, a system design problem, or a product that needs toDF-level reliability with clean UX? Reach out anytime.
+          </p>
+
+          <div class="mt-7 grid grid-cols-1 md:grid-cols-3 gap-5">
+            <a class="glass rounded-2xl p-6 lift block" href="mailto:edwardbai033191@gmail.com">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm text-white/65">Email</div>
+                  <div class="mt-1 font-bold">edwardbai033191@gmail.com</div>
+                </div>
+                <i class="fa-solid fa-envelope text-white/70 text-xl"></i>
+              </div>
+              <div class="mt-3 text-sm text-white/60">Fastest way to reach me.</div>
+            </a>
+
+            <a class="glass rounded-2xl p-6 lift block" href="tel:+13234335181">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm text-white/65">Phone</div>
+                  <div class="mt-1 font-bold">(323) 433-5181</div>
+                </div>
+                <i class="fa-solid fa-phone text-white/70 text-xl"></i>
+              </div>
+              <div class="mt-3 text-sm text-white/60">If it’s urgent, call/text.</div>
+            </a>
+
+            <a
+              class="glass rounded-2xl p-6 lift block"
+              href="https://www.linkedin.com/in/edward-b-15a5043a0/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm text-white/65">LinkedIn</div>
+                  <div class="mt-1 font-bold">edward-b-15a5043a0</div>
+                </div>
+                <i class="fa-brands fa-linkedin text-white/70 text-xl"></i>
+              </div>
+              <div class="mt-3 text-sm text-white/60">Connect and message me.</div>
+            </a>
+          </div>
+
+          <div class="mt-7 pt-6 border-t border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div class="text-sm text-white/60">
+              <span class="font-semibold text-white/75">Tip:</span> Deploy this as a single file on Netlify/Vercel. Works great as <code class="px-2 py-1 rounded bg-white/10 border border-white/10">index.html</code>.
+            </div>
+            <a class="px-4 py-3 rounded-2xl bg-white/10 hover:bg-white/15 transition border border-white/15 font-semibold inline-flex items-center gap-2" href="#top">
+              <i class="fa-solid fa-arrow-up"></i>Back to top
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 bg-black/35 backdrop-blur-xl">
+      <div class="mx-auto max-w-6xl px-4 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="text-white/70 text-sm">
+          <div class="font-semibold text-white/80">Edward Bai</div>
+          <div class="mt-1">Full-Stack Engineer • Systems • Product UI</div>
+        </div>
+        <div class="text-white/55 text-sm">
+          © <span id="year"></span> • Built as a single-page profile • <span class="text-white/70">Torrance, CA</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 700,
+        once: true,
+        offset: 60,
+        easing: "ease-out-cubic",
+      });
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Tiny header shadow on scroll
+      const header = document.querySelector("header");
+      window.addEventListener("scroll", () => {
+        const y = window.scrollY || 0;
+        header.style.boxShadow = y > 10 ? "0 12px 40px rgba(0,0,0,0.35)" : "none";
+      });
+    </script>
+  </body>
 </html>
